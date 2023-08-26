@@ -40,6 +40,7 @@ def create_policy_table(cursor):
             "Car_Value NUMERIC(9,2),"
             "Property_Type VARCHAR(100),"
             "Property_Value NUMERIC(9,2),"
+            "Claim_Status VARCHAR(50),"
             "Coverage_Amount NUMERIC(9, 2))"
         )
     except psycopg2.Error as e:
@@ -68,8 +69,8 @@ def main():
         create_policy_table(cursor)
 
         policy_records = [
-            ("Policy123", "John Doe", 1500.00, "CAR_INSURANCE", 1000,1000, 30,10000,"Residential", 2000, 5000)
-            # ... Add more policy records here ...
+            # ("Policy123", "John Doe", 1500.00, "CAR_INSURANCE", 1000,1000, 30,10000,"Residential", 2000, 5000)
+            # # ... Add more policy records here ...
 
 
            

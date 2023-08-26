@@ -25,7 +25,8 @@ policy_records = [
         'Car_Value': 25000.50,
         'Property_Type': 'House',
         'Property_Value': 300000.75,
-        'Coverage_Amount': 500000.00
+        'Coverage_Amount': 500000.00,
+        'Claim_Status':'APPROVED'
     },
     # Add more records as needed
 ]
@@ -75,11 +76,12 @@ for policy_record in policy_records:
             Car_Value,
             Property_Type,
             Property_Value,
-            Coverage_Amount
+            Coverage_Amount,
+            Claim_Status       
         )
         VALUES (%(Policy_Number)s, %(Policy_Holder_Name)s, %(Premium_Amount)s, 
                 %(Policy_Type)s, %(Coverage_Limits)s, %(Policy_Premium)s, %(Age)s, 
-                %(Car_Value)s, %(Property_Type)s, %(Property_Value)s, %(Coverage_Amount)s)
+                %(Car_Value)s, %(Property_Type)s, %(Property_Value)s, %(Coverage_Amount)s,%(Claim_Status)s)
     """, policy_record)
 
 # Commit the changes to the database

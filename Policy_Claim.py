@@ -13,9 +13,9 @@ def main():
     cursor = conn.cursor()
 
     claim_record = {
-        "Policy-Number": "POL123",
+        "Policy-Number": "Policy123",
         "Date-of-Loss": "2023-08-15",
-        "Cause-of-Loss": "FIRE",
+        "Cause-of-Loss": "CAR_INSURANCE",   # cause -of- loss change - FIRE To CAR_INSurance
         "Amount-of-Loss": 0.0  # Initial value, will be calculated
     }
 
@@ -25,9 +25,9 @@ def main():
     if claim_record["Date-of-Loss"] > "2023-12-31":
         claim_status = "REJECT"
     else:
-        claim_record["Cause-of-Loss"] = "FIRE"  # Policy-Type
+        claim_record["Cause-of-Loss"] = policy_record[3]  # Policy-Type
 
-        if policy_record[3] == "FIRE":
+        if policy_record[3] == "CAR_INSURANCE": # FIRE TO CAR_INSURANCE
             claim_record["Amount-of-Loss"] = 5000.0
         elif policy_record[3] == "THEFT":
             claim_record["Amount-of-Loss"] = 10000.0
@@ -37,7 +37,7 @@ def main():
             claim_status = "REJECT"
 
         if claim_record["Amount-of-Loss"] <= policy_record[4]:  # Coverage-Limits
-            claim_status = "PAY"
+            claim_status = "PAID"
         else:
             claim_status = "REJECT"
 
