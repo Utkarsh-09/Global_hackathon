@@ -29,13 +29,18 @@ def additional_premium(age, car_value, base_premium):
 def create_policy_table(cursor):
     try:
         cursor.execute(
-            "CREATE TABLE IF NOT EXISTS PolicyTable ("
+            "CREATE TABLE IF NOT EXISTS policy_records ("
             "PolicyNumber VARCHAR(10),"
             "PolicyHolderName VARCHAR(50),"
             "PremiumAmount NUMERIC(9, 2),"
             "PolicyType VARCHAR(15),"
             "CoverageLimits NUMERIC(9, 2),"
-            "PolicyPremium NUMERIC(9, 2))"
+            "PolicyPremium NUMERIC(9, 2),"
+            "Age NUMERIC(9,2),"
+            "Car_Value NUMERIC(9,2),"
+            "Property_Type VARCHAR(100),"
+            "Property_Value NUMERIC(9,2),"
+            "Coverage_Amount NUMERIC(9, 2))"
         )
     except psycopg2.Error as e:
         print("Error creating the PolicyTable.")
@@ -63,8 +68,11 @@ def main():
         create_policy_table(cursor)
 
         policy_records = [
-            ("Policy123", "John Doe", 1500.00, "CAR_INSURANCE", 0, 0, 25, 25000.00, "Residential", 200000.00, 0),
+            ("Policy123", "John Doe", 1500.00, "CAR_INSURANCE", 1000,1000, 30,10000,"Residential", 2000, 5000)
             # ... Add more policy records here ...
+
+
+           
         ]
 
         for record in policy_records:
@@ -86,15 +94,35 @@ def main():
                 coverage_limits = 1000000
                 policy_premium = 3000
 
-            policy_premium = additional_premium(age, car_value, policy_premium)
+            # policy_premium = additional_premium(age, car_value, policy_premium)
+
+
+    #     cursor.execute("""
+    #     INSERT INTO policy_records (
+    #         Policy_Number,
+    #         Policy_Holder_Name,
+    #         Premium_Amount,
+    #         Policy_Type,
+    #         Coverage_Limits,
+    #         Policy_Premium,
+    #         Age,
+    #         Car_Value,
+    #         Property_Type,
+    #         Property_Value,
+    #         Coverage_Amount
+    #     )
+    #     VALUES (%(Policy_Number)s, %(Policy_Holder_Name)s, %(Premium_Amount)s, 
+    #             %(Policy_Type)s, %(Coverage_Limits)s, %(Policy_Premium)s, %(Age)s, 
+    #             %(Car_Value)s, %(Property_Type)s, %(Property_Value)s, %(Coverage_Amount)s)
+    # """, record)
 
             cursor.execute(
-                "INSERT INTO PolicyTable (PolicyNumber, PolicyHolderName, PremiumAmount, PolicyType, CoverageLimits, PolicyPremium) "
-                "VALUES (%s, %s, %s, %s, %s, %s)",
-                (record[0], record[1], record[2], record[3], coverage_limits, policy_premium)
+                "INSERT INTO policy_records (PolicyNumber, PolicyHolderName, PremiumAmount, PolicyType, CoverageLimits, PolicyPremium,Age,Car_Value,Property_Type,Property_Value,Coverage_Amount) "
+                "VALUES (%s, %s, %s, %s, %s, %s,%s,%s,%s,%s,%s)",
+                (record[0], record[1], record[2], record[3], coverage_limits, policy_premium,age,car_value,'','','')
             )
 
-            connection.commit()
+        connection.commit()
 
         print("Policy records inserted successfully.")
 
